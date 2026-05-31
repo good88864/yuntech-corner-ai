@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<title>你的雲科角落</title>
+
+<style>
+
+body{
+    font-family: "Microsoft JhengHei", sans-serif;
+    background: linear-gradient(
+        135deg,
+        #f7f9fc,
+        #dfefff
+    );
+    min-height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    margin:0;
+}
+
+.container{
+    width:500px;
+    background:white;
+
+    padding:40px;
+
+    border-radius:20px;
+
+    box-shadow:
+    0 10px 30px rgba(0,0,0,.1);
+}
+
+h1{
+    text-align:center;
+    color:#3b5d7a;
+}
+
+select{
+    width:100%;
+    padding:12px;
+    margin-top:8px;
+    margin-bottom:20px;
+
+    border-radius:10px;
+    border:1px solid #ccc;
+}
+
+button{
+
+    width:100%;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#6ea8d9;
+
+    color:white;
+
+    font-size:16px;
+
+    cursor:pointer;
+}
+
+button:hover{
+    background:#4f91cb;
+}
+
+.result{
+
+    margin-top:30px;
+
+    padding:20px;
+
+    background:#f4f8fc;
+
+    border-radius:15px;
+}
+
+#corner{
+    color:#2d4f6b;
+}
+
+</style>
+</head>
+
+<body>
+  <div class="container">
+
+<h1>找出你的雲科角落</h1>
+
+<p>你喜歡什麼樣的地方？</p>
+
+<select id="place">
+    <option value="quiet">安靜</option>
+    <option value="nature">自然</option>
+    <option value="creative">有設計感</option>
+    <option value="active">熱鬧</option>
+</select>
+
+<p>你喜歡哪種風景？</p>
+
+<select id="view">
+    <option value="nature">湖泊樹木</option>
+    <option value="building">建築景觀</option>
+    <option value="people">人群與活動</option>
+    <option value="sunset">夕陽與天空</option>
+</select>
+
+<p>你覺得自己比較像？</p>
+
+<select id="personality">
+    <option value="gentle">溫柔</option>
+    <option value="thinker">常思考</option>
+    <option value="creative">有創意</option>
+    <option value="leader">行動派</option>
+</select>
+
+<p>下課後你最常？</p>
+
+<select id="afterClass">
+    <option value="alone">自己待著</option>
+    <option value="friends">找朋友聊天</option>
+    <option value="walk">在校園散步</option>
+    <option value="club">參加活動</option>
+</select>
+
+<p>遇到壓力時你會？</p>
+
+<select id="stress">
+    <option value="quiet">找安靜的地方</option>
+    <option value="music">聽音樂</option>
+    <option value="talk">找朋友傾訴</option>
+    <option value="busy">讓自己忙起來</option>
+</select>
+
+
+<button id="generateBtn" onclick="getResult()">
+產生我的角落
+</button>
+
+<div class="result">
+
+<h2 id="corner"></h2>
+
+<p id="text"></p>
+
+</div>
+
+</div>
+
+  <script>
+
+async function getResult() {
+
+  const button = document.getElementById("generateBtn");
+button.disabled = true;
+button.innerText = "生成中...";
+
+    let scores = {
+    library: 0,
+    lake: 0,
+    design: 0,
+    stadium: 0,
+    gate: 0,
+    activity: 0,
+    dorm: 0,
+    bench: 0
+};
+
+    const place = document.getElementById("place").value;
+    const personality = document.getElementById("personality").value;
+
+    const afterClass = document.getElementById("afterClass").value;
+    const stress = document.getElementById("stress").value;
+
+    if (place === "quiet") scores.library += 2;
+    if (place === "nature") scores.lake += 2;
+    if (place === "creative") scores.design += 2;
+    if (place === "active") scores.stadium += 2;
+
+    if (personality === "gentle") scores.library += 1;
+    if (personality === "thinker") scores.lake += 1;
+    if (personality === "creative") scores.design += 1;
+    if (personality === "leader") scores.stadium += 1;
+
+    if(afterClass === "alone"){
+    scores.bench += 2;
+    scores.lake += 1;
+}
+
+if(afterClass === "friends"){
+    scores.activity += 2;
+    scores.dorm += 1;
+}
+
+if(afterClass === "walk"){
+    scores.gate += 1;
+    scores.lake += 2;
+}
+
+if(afterClass === "club"){
+    scores.activity += 2;
+    scores.stadium += 1;
+}
+
+if(stress === "quiet"){
+    scores.bench += 2;
+    scores.library += 1;
+}
+
+if(stress === "music"){
+    scores.design += 2;
+}
+
+if(stress === "talk"){
+    scores.activity += 2;
+}
+
+if(stress === "busy"){
+    scores.stadium += 2;
+}
+
+    let result = Object.keys(scores).reduce((a, b) =>
+        scores[a] > scores[b] ? a : b
+    );
+
+    const data = {
+
+    library: {
+        name: "圖書館前草地"
+    },
+
+    lake: {
+        name: "雲夢湖"
+    },
+
+    design: {
+        name: "設計學院走廊"
+    },
+
+    stadium: {
+        name: "操場司令台"
+    },
+
+    gate: {
+        name: "校門口"
+    },
+
+    activity: {
+        name: "學生活動中心"
+    },
+
+    dorm: {
+        name: "宿舍前廣場"
+    },
+
+    bench: {
+        name: "樹蔭長椅"
+    }
+
+};
+
+    const cornerName = data[result].name;
+
+    document.getElementById("corner").innerText =
+        "你的雲科角落是：" + cornerName;
+
+    document.getElementById("text").innerText =
+        "正在為你生成專屬文字...";
+
+    try {
+
+        const response = await fetch("/generate", {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+            corner: cornerName,
+            place,
+            personality,
+            afterClass,
+            stress
+            })
+})
+
+        const aiData = await response.json();
+
+        document.getElementById("text").innerText =
+            aiData.result;
+
+    }    catch (error) {
+
+    console.error(error);
+
+    if (error.status === 429) {
+      res.status(429).json({
+        result: "目前體驗人數較多，請稍等約 40 秒後再試一次。"
+      });
+      return;
+    }
+
+    res.status(500).json({
+      result: "AI 生成失敗，請稍後再試。"
+    });
+
+  } finally {
+    button.disabled = false;
+    button.innerText = "產生我的角落";
+}
+}
+
+
+</script>
+</body>
+</html>
