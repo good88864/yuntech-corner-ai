@@ -78,11 +78,20 @@ app.post("/generate", async (req, res) => {
 
     console.error(error);
 
-    res.status(500).json({
-      result: "AI生成失敗"
+    if (error.status === 429) {
+
+        res.json({
+            result: "目前體驗人數較多，請稍後約1分鐘再試一次🫶"
+        });
+
+        return;
+    }
+
+    res.json({
+        result: "系統忙碌中，請稍後再試一次🫶"
     });
 
-  }
+}
 
 });
 
