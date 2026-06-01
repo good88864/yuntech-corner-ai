@@ -34,6 +34,14 @@ body{
     0 10px 30px rgba(0,0,0,.1);
 }
 
+.corner-image{
+    width:100%;
+    margin:18px 0;
+    border-radius:16px;
+    display:none;
+    box-shadow:0 6px 18px rgba(0,0,0,.12);
+}
+
 h1{
     text-align:center;
     color:#3b5d7a;
@@ -175,6 +183,9 @@ button:hover{
 
 <h2 id="corner"></h2>
 
+<img id="cornerImage" class="corner-image" src="" alt="雲科角落照片">
+
+
 <p id="text"></p>
 
 </div>
@@ -269,43 +280,56 @@ if(stress === "busy"){
     const data = {
 
     library: {
-        name: "圖書館前草地"
+        name: "圖書館前草地",
+        image: "images/IMG_5546.PNG"
     },
 
     lake: {
-        name: "雲夢湖"
+        name: "雲夢湖",
+        image: "images/IMG_5837.JPG"
     },
 
     design: {
-        name: "設計學院走廊"
+        name: "設計學院走廊",
+        image: "images/in.jpg"
     },
 
     stadium: {
-        name: "操場司令台"
+        name: "操場司令台",
+        image: "images/skz.jpg"
     },
 
     gate: {
-        name: "校門口"
+        name: "校門口",
+        image: "images/jeongin.jpg"
     },
 
     activity: {
-        name: "學生活動中心"
+        name: "學生活動中心",
+        image: "images/in1788.JPG"
     },
 
     dorm: {
-        name: "宿舍前廣場"
+        name: "宿舍前廣場",
+        image: "images/IMG_5003.PNG"
     },
 
     bench: {
-        name: "樹蔭長椅"
+        name: "樹蔭長椅",
+        image: "images/IMG_5656.PNG"
     }
 
 };
 
     const cornerName = data[result].name;
+    const cornerImg = data[result].image;
 
     document.getElementById("corner").innerText =
         "你的雲科角落是：" + cornerName;
+
+        const imageElement = document.getElementById("cornerImage");
+        imageElement.src = cornerImg;
+        imageElement.style.display = "block";
 
     document.getElementById("text").innerText =
         "正在為你生成專屬文字...";
