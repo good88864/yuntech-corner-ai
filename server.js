@@ -18,6 +18,7 @@ app.post("/generate", async (req, res) => {
   const {
     corner,
     place,
+    scenery,
     personality,
     afterClass,
     stress
@@ -32,6 +33,7 @@ app.post("/generate", async (req, res) => {
 
 角落：${corner}
 喜歡的環境：${place}
+喜歡的風景：${scenery}
 個性：${personality}
 下課習慣：${afterClass}
 面對壓力：${stress}
